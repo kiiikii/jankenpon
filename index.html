@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        function getComputerChoice() {
+            let choice = Math.floor(Math.random()*3);
+            switch (choice) {
+                case 0:
+                    return "rock";
+                case 1:
+                    return "scissor";
+                case 2:
+                    return "paper";
+                default:
+                    return "invalid";
+            }
+        }
+        
+        function getHumanChoice() {
+            let choice = prompt("Enter your choice (rock, scissor, or paper):");
+            if (choice === null) {
+                alert("You Cancelling the game!");
+                return null;;
+            }
+            choice = choice.toLowerCase();
+
+            if (choice === "rock" || choice === "scissor" || choice === "paper") {
+                return choice;
+            } else {
+                alert("Invalid choice! Please enter rock, scissor, or paper.");
+                return getHumanChoice();
+            }
+        }
+
+        var humanScore = 0;
+        var computerScore = 0;
+
+        function playRound(humanChoice, computerChoice) {
+            console.log(`Human choice: ${humanChoice}`);
+            console.log(`Computer choice: ${computerChoice}`);
+
+            if (humanChoice === computerChoice) {
+                return "it's a Tie!";
+            } else if (
+                (humanChoice === "rock" && computerChoice === "scissor") ||
+                (humanChoice === "scissor" && computerChoice === "paper") ||
+                (humanChoice === "paper" && computerChoice === "rock")
+            ) {
+                humanScore++;
+                return `You Win! ${humanChoice} beats ${computerChoice}`;
+            } else {
+                computerScore++;
+                return `You Lose! ${computerChoice} beats ${humanChoice}`;
+            }
+        }
+
+        function playGame() {
+            for (let i = 0;i < 5; i++) {
+                const humanChoice = getHumanChoice();
+                if (humanChoice === null) return;
+                const computerChoice = getComputerChoice();
+                console.log(playRound(humanChoice, computerChoice));
+            }
+
+            console.log(`Score: Human ${humanScore}, Computer ${computerScore}`);
+            if (humanScore > computerScore) {
+                console.log("You Win the Game!");
+            } else if (humanScore < computerScore) {
+                console.log("You Lose the Game!");
+            } else {
+                console.log("It's a Tie!");
+            }
+        }
+
+        playGame();
+    </script>
+</body>
+</html>
